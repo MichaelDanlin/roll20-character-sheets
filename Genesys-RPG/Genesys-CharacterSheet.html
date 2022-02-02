@@ -1141,6 +1141,7 @@
                         <thead>
                             <tr>
                                 <th data-i18n="knowledgeskills">Knowledge Skills</th>
+                                <th data-i18n="char">Char</th>
                                 <th data-i18n="career">Career</th>
                                 <th colspan="2" data-i18n="rank">Rank</th>
                                 <th colspan="2" data-i18n="mods">Mods</th>
@@ -1165,6 +1166,35 @@
                                 </td>
                                 <td><button type='roll' name='roll_Knowledge' value='!eed characterID(@{character_id}) label(skill:Knowledge) @{diceKnowledge} skill(@{rankKnowledge}|@{intellect}) @{dicePool} (gmdice)'></button></td>
                             </tr><!--Knowledge-->
+                        <fieldset class="repeating_customknowledgeSkills">
+                        <table class="sheet-customknowledge-skills" cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" name="attr_customknowledgeskillname1" /></td>
+                                    <td>
+                                        <select name="attr_charcustomknowldgeskillname1">
+                                            <option value="@{brawn}" data-i18n="brawn">Brawn</option><!-- encum not working -->
+                                            <option value="@{agility}" data-i18n="agility">Agility</option>
+                                            <option value="@{intellect}" data-i18n="intellect">Intellect</option>
+                                            <option value="@{cunning}" data-i18n="cunning">Cunning</option>
+                                            <option value="@{willpower}" data-i18n="willpower">Willpower</option>
+                                            <option value="@{presence}" data-i18n="presence">Presence</option>
+                                        </select>
+                                    </td>
+                                    <td><input name='attr_careerskillcustomknowledgeskillname1' type="checkbox" value="1"></td>
+                                    <td><input type="number" name="attr_rankcustomknowledgeskillname1" max="6" min="0" value="0" /></td>
+                                    <td>
+                                        <input class="sheet-yd" type="hidden" name="attr_ycustomknowledgeskillname1" value="(((@{charcustomknowledgeskillname1} + @{rankcustomknowledgeskillname1}) - abs(@{charcustomknowledgeskillname1} - @{rankcustomknowledgeskillname1})) / 2)" disabled><span></span>
+                                        <input class="sheet-gd" type="hidden" name="attr_gcustomknowledgeskillname1" value="((((@{charcustomknowledgeskillname1} + @{rankcustomknowledgeskillname1}) + abs(@{charcustomknowledgeskillname1} - @{rankcustomknowldgeskillname1})) / 2) - @{ycustomknoeldgeskillname1})" disabled><span></span>
+                                    </td>
+                                    <td>
+                                        <div class="sheet-dice-icon"></div>
+                                        <div class="sheet-dice-input">
+                                            <input type="text" name="attr_dicecustomknowledgeskillname1" />
+                                        </div>
+                                    </td>
+                                    <td><button type='roll' name='roll_customknowledgeskillname1' value='!eed characterID(@{character_id}) label(skill:@{customknowledgeskillname1}) @{dicecustomskillname1} skill(@{rankcustomskillname1}|@{charcustomskillname1}|@{customskillname1}) @{dicePool} (gmdice)'></button></td>
+                                </tr><!--Custom Knowledge Skill 1-->
                         </tbody>
                     </table><!--Knowledge Skills Section-->
                     <table class="sheet-custome-skills" cellspacing="0" cellpadding="0" border="0">
@@ -1343,6 +1373,11 @@
                                                         <option value="skill(@{rankRanged}|@{agility})" data-i18n="ranged">Ranged</option>
                                                         <option value="skill(@{rankLight}|@{agility})" data-i18n="rangedlight">Ranged - Light</option>
                                                         <option value="skill(@{rankHeavy}|@{agility})" data-i18n="rangedheavy">Ranged - Heavy</option>
+                                                    </optgroup>
+                                                    <optgroup label="Magic Skills">
+                                                        <option value="skill(@{rankArcana}|@{intellect})" data-i18n="arcana">Arcana</option>
+                                                        <option value="skill(@{rankDivine}|@{willpower})" data-i18n="divine">Divine</option>
+                                                        <option value="skill(@{rankPrimal}|@{cunning})" data-i18n="primal">Primal</option>
                                                     </optgroup>
                                                     <optgroup label="General Skills">
                                                         <option value="skill(@{rankMechanics}|@{intellect})" data-i18n="mechanics">Mechanics</option>
@@ -2361,8 +2396,20 @@
                                         <td colspan="4"><label style="display:inline-block; width:25%;" data-i18n="special:">Special:</label><input style="display:inline-block; width:74%;" name='attr_spaceWeaponSpecial' type="text" /></td>
                                         <td>
                                             <select name='attr_spaceWeaponSkill'>
+                                            <optgroup label="Ranged Weapon Skills">
                                                 <option value="skill:agility,rankGunnery" data-i18n="gunnery">Gunnery</option>
                                                 <option value="skill:agility,rankHeavy" data-i18n="rangedheavy">Ranged - Heavy</option>
+                                                <option value="skill:agility,rankLight" data-i18n="ranged">Ranged</option>
+                                            </optgroup>
+                                            <optgroup label="Magical Weapon Skills">
+                                                <option value="skill:intllect,rankArcana" data-i18n="arcana">Arcana</option>
+                                                <option value="skill:willpower,rankDivine" data-i18n="divine">Divine</option>
+                                                <option value="skill:cunning,rankPrimal" data-i18n="primal">Primal</option>
+                                            </optgroup>
+                                            <optgroup label="Ramming Skills">
+                                                <option value="skill:agility,rankPiloting" data-i18n="piloting">Piloting</option>
+                                                <option value="skill:intellect,rankOperating" data-i18n="operating">Operating</option>
+                                            </optgroup>
                                             </select>
                                         </td>
                                         <td><button type='roll' name='roll_space-shipWeapon' value='!eed rollPlayer(character:@{spaceWeaponCharacterName}|encum|@{spaceWeaponSkill}) label(Weapon:@{spaceWeaponName}|Vehicle:@{transport-space-name}|Damage:@{spaceWeaponDmg}|Critical:@{spaceWeaponCrit}|Range:@{spaceweaponrange}|Qualities:@{spaceWeaponSpecial}) combat(vehicle) @{spaceWeaponDice} @{dicePool} (gmdice)'></button></td>
@@ -2882,8 +2929,28 @@
                                         </td>
                                         <td>
                                             <select name='attr_planetaryWeaponSkill'>
+                                                <optgroup label="Ranged Weapon Skills">
                                                 <option value="skill:agility,rankGunnery" data-i18n="gunnery">Gunnery</option>
                                                 <option value="skill:agility,rankHeavy" data-i18n="rangedheavy">Ranged - Heavy</option>
+                                                <option value="skill:agility,rankLight" data-i18n="rangedlight">Ranged - Light</option>
+                                                <option value="skill:agility,rankLight" data-i18n="ranged">Ranged</option>
+                                            </optgroup>
+                                            <optgroup label="Close Combat Weapon Skills">
+                                                <option value="skill:brawn,rankMelee" data-i18n="meleeheavy">Melee - Heavy</option>
+                                                <option value="skill:brawn,rankMelee" data-i18n="meleelight">Melee - Light</option>
+                                                <option value="skill:brawn,rankMelee" data-i18n="melee">Melee</option>
+                                                <option value="skill:brawn,rankBrawn" data-i18n="brawn">Brawn</option>
+                                            </optgroup>
+                                            <optgroup label="Magical Weapon Skills">
+                                                <option value="skill:intllect,rankArcana" data-i18n="arcana">Arcana</option>
+                                                <option value="skill:willpower,rankDivine" data-i18n="divine">Divine</option>
+                                                <option value="skill:cunning,rankPrimal" data-i18n="primal">Primal</option>
+                                            </optgroup>
+                                            <optgroup label="Ramming Skills">
+                                                <option value="skill:agility,rankRiding" data-i18n="riding">Riding</option>
+                                                <option value="skill:agility,rankDriving" data-i18n="driving">Driving</option>
+                                                <option value="skill:agility,rankPiloting" data-i18n="piloting">Piloting</option>
+                                                <option value="skill:intellect,rankOperating" data-i18n="operating">Operating</option>
                                             </select>
                                         </td>
                                         <td><button type='roll' name='roll_planetary-shipWeapon' value='!eed rollPlayer(character:@{planetaryWeaponCharacterName}|encum|@{planetaryWeaponSkill}) label(Weapon:@{planetaryWeaponName}|Vehicle:@{transport-planetary-name}|Damage:@{planetaryWeaponDmg}|Critical:@{planetaryWeaponCrit}|Range:@{planetaryweaponrange}|Qualities:@{planetaryWeaponSpecial}) @{planetaryWeaponDice} @{dicePool} (gmdice)'></button></td>
